@@ -23,18 +23,18 @@ module.exports = function (RED, debugSettings) {
             .get(url)
             .config('headers', {'cookie': cookies ? cookies : ''})
             .set({
-                'time': ['.times>td>.cell'],
+                //'time': ['.times>td>.cell'],
                 'timeHourly': ['.hourlywind tr:first>td'],
-                'icon': ['.icons>td>.cell>.pictoicon>.picon@class'],
-                'iconHourly': ['.hourlywind tr:range(2,2)>td>.pictoicon>.picon@class'],
-                'temperatureC': ['.temperatures>td>.cell'],
-                'temperatureCHourly': ['.hourlywind tr:range(4,4)>td'],
+                //'icon': ['.icons>td>.cell>.pictoicon>.picon@class'],
+                'icon': ['.hourlywind tr:range(2,2)>td>.pictoicon>.picon@class'],
+                //'temperatureC': ['.temperatures>td>.cell'],
+                'temperatureC': ['.hourlywind tr:range(4,4)>td'],
                 'temperatureFeltC': ['.windchills>td>.cell'],
-                'windDirection': ['.winddirs>td>.cell>div'],
-                'windDirectionHourly': ['.hourlywind tr:range(5,5)>td>span@class'],
-                'windSpeedKmh': ['.windspeeds>td>.cell'],
-                'windSpeedKmhHourly': ['.hourlywind tr:range(6,6)>td'],
-                'windgustKmhHourly': ['.hourlywind tr:range(7,7)>td'],
+                //'windDirection': ['.winddirs>td>.cell>div'],
+                'windDirection': ['.hourlywind tr:range(5,5)>td>span@class'],
+                //'windSpeedKmh': ['.windspeeds>td>.cell'],
+                'windSpeedKmh': ['.hourlywind tr:range(6,6)>td'],
+                'windGustKmh': ['.hourlywind tr:range(7,7)>td'],
                 'relativeHumidity': ['.humidities>td>.cell'],
                 'precipitationMmPer3h': ['.precips:first>td>.cell'],
                 'precipitationProbabilityPercentage': ['.precipprobs>td>.cell'],
@@ -64,54 +64,65 @@ module.exports = function (RED, debugSettings) {
         let parsedData = {};
         parsedData['weatherData'] = {};
 
-        // Create a weather information object for each 3 hours
-        data.time.forEach(function (timeEl, timeIndex) {
+        // Parse all the data that is available hourly.
+        data.timeHourly.forEach(function (timeEl, timeIndex) {
             let timeDate = timeStringToDate(timeEl);
-            // Convert to ISO string to compensate for time zones
             timeEl = timeDate.toISOString().slice(0,10) + 'T' + timeDate.toISOString().slice(11,16);
             parsedData['weatherData'][timeEl] = {};
 
-            // Add all the available properties to the weather information object that are arrays and contain enough data
             for(let scrapeIndex in data) {
-                if(data.hasOwnProperty(scrapeIndex)) {
-                    if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.time.length) {
-                        switch(scrapeIndex) {
-                            case 'time':
-                                break;
-                            case 'icon':
-                                parsedData['weatherData'][timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
-                                break;
-                            case 'windSpeedKmh':
-                            case 'precipitationMmPer3h':
-                                parsedData['weatherData'][timeEl][scrapeIndex] = {
-                                    min: parseInt(data[scrapeIndex][timeIndex].split('-')[0]),
-                                    max: parseInt(data[scrapeIndex][timeIndex].split('-')[1])
-                                };
-                                break;
-                            case 'temperatureC':
-                            case 'temperatureFeltC':
-                            case 'relativeHumidity':
-                            case 'precipitationProbabilityPercentage':
-                                parsedData['weatherData'][timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
-                                break;
-                            default:
-                                parsedData['weatherData'][timeEl][scrapeIndex] = data[scrapeIndex][timeIndex];
-                        }
-                    }
+                if(!data.hasOwnProperty(scrapeIndex))
+                    continue;
 
-                    else if(data[scrapeIndex].constructor === Array && scrapeIndex === 'precipitationHourly') {
-                        // Split the available hourly data into 2*3hours
-                        let precipitationHourlyTimeGroup = data[scrapeIndex].splice(0,6);
-                        let precipitationHourlyTimeObject = {};
-                        // For each hour create two properties and pop the value from the split array
-                        for(let i = 0; i<3; i++) {
-                            let hourlyDate = new Date(timeDate.getTime() + i * 60 * 60000);
-                            precipitationHourlyTimeObject[hourlyDate.toISOString().slice(0,10) + 'T' + hourlyDate.toISOString().slice(11,16)] = {
-                                precipitationProbabilityPercentage: parseInt(precipitationHourlyTimeGroup.shift()),
-                                precipitationMmPer3h: parseInt(precipitationHourlyTimeGroup.shift())
+                if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.timeHourly.length) {
+                    switch(scrapeIndex) {
+                        case 'timeHourly':
+                            break;
+                        case 'icon':
+                            parsedData['weatherData'][timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
+                            break;
+                        case 'windDirection':
+                            parsedData['weatherData'][timeEl][scrapeIndex] = data[scrapeIndex][timeIndex].replace('glyph winddir ', '');
+                            break;
+                        case 'temperatureC':
+                        case 'windSpeedKmh':
+                        case 'windGustKmh':
+                            parsedData['weatherData'][timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
+                            break;
+                        default:
+                            parsedData['weatherData'][timeEl][scrapeIndex] = data[scrapeIndex][timeIndex];
+                    }
+                }
+            }
+        });
+
+        // Parse all the data that is available every 3 hours.
+        // Add the same value to 3 objects so that every object posses the same properties.
+        data.timeHourly.forEach(function (timeEl, timeIndex) {
+            for(let scrapeIndex in data) {
+                if(!data.hasOwnProperty(scrapeIndex))
+                    continue;
+
+                if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.timeHourly.length / 3) {
+                    for(let i=0; i<data[scrapeIndex].length; i++) {
+                        let indexCounter = i*3;
+                        for(let x=0; x<3; x++) {
+                            switch(scrapeIndex) {
+                                case 'temperatureFeltC':
+                                case 'relativeHumidity':
+                                case 'precipitationProbabilityPercentage':
+                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = parseInt(data[scrapeIndex][i]);
+                                    break;
+                                case 'precipitationMmPer3h':
+                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = {
+                                        min: parseInt(data[scrapeIndex][i].split('-')[0]) ? parseInt(data[scrapeIndex][i].split('-')[0]) : 0,
+                                        max: parseInt(data[scrapeIndex][i].split('-')[1]) ? parseInt(data[scrapeIndex][i].split('-')[1]) : 0
+                                    };
+                                    break;
+                                default:
+                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = data[scrapeIndex][i];
                             }
                         }
-                        parsedData['weatherData'][timeEl][scrapeIndex] = precipitationHourlyTimeObject;
                     }
                 }
             }
@@ -119,7 +130,7 @@ module.exports = function (RED, debugSettings) {
 
         // Add all the time insensitive properties to the parsedData object
         for(let scrapeIndex in data) {
-            if(data.hasOwnProperty(scrapeIndex) && (data[scrapeIndex].constructor !== Array || (data[scrapeIndex].length !== data.time.length * 2 * 3 && data[scrapeIndex].length !== data.time.length))) {
+            if(data.hasOwnProperty(scrapeIndex) && (data[scrapeIndex].constructor !== Array || (data[scrapeIndex].length !== data.timeHourly.length / 3 && data[scrapeIndex].length !== data.timeHourly.length))) {
                 switch(scrapeIndex) {
                     case 'pressureHpa':
                     case 'uvIndex':
