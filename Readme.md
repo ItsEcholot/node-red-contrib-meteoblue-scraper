@@ -54,7 +54,7 @@ weather data
 - domain:string - Not known. Identifier of some sort.
 - lastModelRun:number - Timestamp of last time model was run by meteoblue
 - weatherDescription:string - Description of weather written by meteoblue if available
-- meteogram:string - URL for the meteogram.
+- meteogram:string - URL for the meteogram. The link is only valid for 15 minutes.
 
 Sample output
 -------------
