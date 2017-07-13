@@ -36,22 +36,14 @@ weather data
         - temperatureC:number - Temperature in degree Celsius
         - temperatureFeltC:number - Temperature "felt" in degree Celsius
         - windDirection:string - Wind direction abbreviation
-        - windSpeedKmh:object - Contains wind speed in kilometers per hour data
-            - min:number - Minimum wind speed in kilometers per hour
-            - max:number - Maximum wind speed in kilometers per hour
+        - windSpeedKmh:number - Wind speed in kilometers per hour
+        - windGustKmh:number - Wind gust speed in kilometers per hour
         - relativeHumidity:number - Relative humidity in percentage
         - precipitationMmPer3h:object - Amount of precipitation in millimeters per 3 hours
             - min:number - Minimum amount of precipitation in millimeters per 3 hours
             - max:number - Maximum amount of precipitation in millimeters per 3 hours
         - precipitationProbabilityPercentage:number - Probability of precipitation in
         percentage
-        - precipitationHourly:object - Contains multiple {{date string}} objects that contain
-        hourly precipitation values
-            - {{date string}}:object - Contains the actual hourly precipitation data
-                - precipitationProbabilityPercentage:number - Probability of precipitation
-                in percentage.
-                - precipitationMmPer3h:number - Amount of precipitation in millimeters
-                per 3 hours.
 - uvIndex:number - UV Index
 - timesSunriseSunset:object - Contains sunrise and sunset dates
     - sunrise:string - Date string of the sunrise
