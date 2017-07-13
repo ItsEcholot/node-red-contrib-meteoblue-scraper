@@ -1,0 +1,19 @@
+{
+  "name": "node-red-contrib-meteoblue-scraper",
+  "version": "1.0.0",
+  "description": "Node red node that parses weather data from meteoblue.com and returns a single js object as the payload",
+  "main": "index.js",
+  "author": "Marc Berchtold",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "node-red": {
+    "nodes": {
+      "meteoblue-scraper": "meteoblue-scraper.js"
+    }
+  },
+  "dependencies": {
+    "osmosis": "^1.1.4"
+  }
+}

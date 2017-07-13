@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    RED.nodes.registerType('meteoblue-scraper',{
+        category: 'function',
+        color: '#2080b4',
+        defaults: {
+            name: {value: ""},
+            cookies: {value: 'addparam=true'},
+            requestUrl: {value: ""},
+            requestUrlMeteogram: {value: ""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "white-globe.png",
+        label: function() {
+            return this.name||"meteoblue-scraper";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="meteoblue-scraper">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-requestUrl"><i class="icon-tag"></i> Meteoblue 7-day forecast URL</label>
+        <input type="text" id="node-input-requestUrl">
+    </div>
+    <div class="form-row">
+        <label for="node-input-requestUrlMeteogram"><i class="icon-tag"></i> Meteoblue Meteogram URL</label>
+        <input type="text" id="node-input-requestUrlMeteogram">
+    </div>
+    <div class="form-row">
+        <label for="node-input-cookies"><i class="icon-tag"></i> Cookie-String</label>
+        <input type="text" id="node-input-cookies"></input>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="lower-case">
+    <p>Node that parses weather data from meteoblue.com and returns a single js object as the payload</p>
+</script>
