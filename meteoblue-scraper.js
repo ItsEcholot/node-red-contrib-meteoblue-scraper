@@ -168,6 +168,9 @@ module.exports = function (RED, debugSettings) {
                         break;
                     case 'precipitationHourly':
                         break;
+                    case 'meteogram':
+                        parsedData[scrapeIndex] = data[scrapeIndex].replace(' 1.4x', '');
+                        break;
                     default:
                         parsedData[scrapeIndex] = data[scrapeIndex];
                 }

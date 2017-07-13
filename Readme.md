@@ -54,7 +54,7 @@ weather data
 - domain:string - Not known. Identifier of some sort.
 - lastModelRun:number - Timestamp of last time model was run by meteoblue
 - weatherDescription:string - Description of weather written by meteoblue if available
-- meteogram:string - URL for the meteogram. Currently the scraped URL doesn't seem to work.
+- meteogram:string - URL for the meteogram.
 
 Sample output
 -------------
