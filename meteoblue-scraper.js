@@ -59,7 +59,9 @@ module.exports = function (RED, debugSettings) {
 
         // Create a weather information object for each 3 hours
         data.time.forEach(function (timeEl, timeIndex) {
-            timeEl = parseInt(timeEl);
+            let timeDate = timeStringToDate(timeEl);
+            // Convert to ISO string to compensate for time zones
+            timeEl = timeDate.toISOString().slice(0,10) + 'T' + timeDate.toISOString().slice(11,16);
             parsedData[timeEl] = {};
 
             // Add all the available properties to the weather information object that are arrays and contain enough data
@@ -68,7 +70,6 @@ module.exports = function (RED, debugSettings) {
                     if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.time.length) {
                         switch(scrapeIndex) {
                             case 'time':
-                                parsedData[timeEl][scrapeIndex] = timeEl;
                                 break;
                             case 'icon':
                                 parsedData[timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
@@ -97,7 +98,8 @@ module.exports = function (RED, debugSettings) {
                         let precipationHourlyTimeObject = {};
                         // For each hour create two properties and pop the value from the split array
                         for(let i = 0; i<3; i++) {
-                            precipationHourlyTimeObject[timeEl+(100*i)] = {
+                            let hourlyDate = new Date(timeDate.getTime() + i * 60 * 60000);
+                            precipationHourlyTimeObject[hourlyDate.toISOString().slice(0,10) + 'T' + hourlyDate.toISOString().slice(11,16)] = {
                                 precipationProbabilityPercentage: parseInt(precipationHourlyTimeGroup.shift()),
                                 precipationMmPer3h: parseInt(precipationHourlyTimeGroup.shift())
                             }
@@ -117,8 +119,12 @@ module.exports = function (RED, debugSettings) {
                         parsedData[scrapeIndex] = parseInt(data[scrapeIndex].match(/\d+/));
                         break;
                     case 'domain':
-                    case 'timezone':
                         parsedData[scrapeIndex] = data[scrapeIndex].split(': ')[1];
+                        break;
+                    case 'timezone':
+                        // We're compensating for timezones. So let's set this to UTC.
+                        //parsedData[scrapeIndex] = data[scrapeIndex].split(': ')[1];
+                        parsedData[scrapeIndex] = 'UTC';
                         break;
                     case 'timesSunriseSunset':
                         parsedData[scrapeIndex] = {
@@ -146,6 +152,15 @@ module.exports = function (RED, debugSettings) {
         }
 
         return callback(parsedData);
+    }
+
+    function timeStringToDate(timeString) {
+        let time = new Date();
+        time.setHours(timeString.substring(0,2));
+        time.setMinutes(timeString.substring(2,4));
+        time = new Date(time.getTime());
+
+        return time;
     }
 
     if(RED)
