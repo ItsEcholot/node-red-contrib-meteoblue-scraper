@@ -40,7 +40,7 @@ module.exports = function (RED, debugSettings) {
                 'timezone': '.model-info>.misc>span:skip(1)',
                 'domain': '.model-info>.misc>span:skip(2)',
                 'lastModelRun': '.model-info>.misc>span:skip(3)',
-                'weatherDescription': ['#tab_wrapper>.tab_detail>div>div:skip(3)>p']
+                'weatherDescription': ['#tab_wrapper>.tab_detail>.details>.col-12:skip(1)>p']
             })
             .get(urlMeteogram)
             .set({
@@ -59,7 +59,7 @@ module.exports = function (RED, debugSettings) {
 
         // Create a weather information object for each 3 hours
         data.time.forEach(function (timeEl, timeIndex) {
-            timeEl = parseInt(timeEl) - 300;
+            timeEl = parseInt(timeEl);
             parsedData[timeEl] = {};
 
             // Add all the available properties to the weather information object that are arrays and contain enough data
@@ -91,7 +91,7 @@ module.exports = function (RED, debugSettings) {
                         }
                     }
 
-                    else if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.time.length * 2 * 3) {
+                    else if(data[scrapeIndex].constructor === Array && scrapeIndex === 'precipationHourly') {
                         // Split the available hourly data into 2*3hours
                         let precipationHourlyTimeGroup = data[scrapeIndex].splice(0,6);
                         let precipationHourlyTimeObject = {};
@@ -127,10 +127,17 @@ module.exports = function (RED, debugSettings) {
                         };
                         break;
                     case 'lastModelRun':
-                        parsedData[scrapeIndex] = new Date(data[scrapeIndex].match(/[\d.]{10} \d{2}\:\d{2}/)).getTime()/1000;
+                        if(data[scrapeIndex].match(/[\d.-]{10} \d{2}\:\d{2}/)[0]) {
+                            let dateTime = data[scrapeIndex].match(/[\d.-]{10} \d{2}\:\d{2}/)[0].split(' ');
+                            dateTime[0] = dateTime[0].split('.').reverse().join('-');
+                            dateTime = dateTime.join(' ');
+                            parsedData[scrapeIndex] = new Date(dateTime).getTime() / 1000;
+                        }
                         break;
                     case 'weatherDescription':
                         parsedData[scrapeIndex] = data[scrapeIndex].join("\r\n");
+                        break;
+                    case 'precipationHourly':
                         break;
                     default:
                         parsedData[scrapeIndex] = data[scrapeIndex];
