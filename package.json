@@ -3,8 +3,16 @@
   "version": "1.0.0",
   "description": "Node red node that parses weather data from meteoblue.com and returns a single js object as the payload",
   "main": "index.js",
-  "author": "Marc Berchtold",
+  "author": {
+    "name": "Marc Berchtold",
+    "email": "marc.berchtold@hotmail.de",
+    "url": "https://echolot.io"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ItsEcholot/node-red-contrib-meteoblue-scraper.git"
+  },
   "scripts": {
     "start": "node index.js"
   },
