@@ -1,6 +1,8 @@
 Node-RED Meteoblue Scraper
 ==========================
 
+[![NPM](https://nodei.co/npm/node-red-contrib-meteoblue-scraper.png)](https://npmjs.org/package/node-red-contrib-meteoblue-scraper)
+
 This Node-RED node will, on any input, scrape the 7-day forecast and the meteogram page
 at the url defined in the node configuration.
 
