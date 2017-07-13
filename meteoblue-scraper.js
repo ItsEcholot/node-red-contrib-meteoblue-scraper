@@ -30,9 +30,9 @@ module.exports = function (RED, debugSettings) {
                 'windDirection': ['.winddirs>td>.cell>div'],
                 'windSpeedKmh': ['.windspeeds>td>.cell'],
                 'relativeHumidity': ['.humidities>td>.cell'],
-                'precipationMmPer3h': ['.precips:first>td>.cell'],
-                'precipationProbabilityPercentage': ['.precipprobs>td>.cell'],
-                'precipationHourly': ['.precip-hourly-title>.precip-bar-part>.precip-hourly>.precip-help>strong'],
+                'precipitationMmPer3h': ['.precips:first>td>.cell'],
+                'precipitationProbabilityPercentage': ['.precipprobs>td>.cell'],
+                'precipitationHourly': ['.precip-hourly-title>.precip-bar-part>.precip-hourly>.precip-help>strong'],
                 'uvIndex': '.model-info>.sun>.uv-index>.uv-value',
                 'timesSunriseSunset': '.model-info>.sun>.times-rs',
                 'moonInfo': '.model-info>.moon>.moon-icon@title',
@@ -76,7 +76,7 @@ module.exports = function (RED, debugSettings) {
                                 parsedData['weatherData'][timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
                                 break;
                             case 'windSpeedKmh':
-                            case 'precipationMmPer3h':
+                            case 'precipitationMmPer3h':
                                 parsedData['weatherData'][timeEl][scrapeIndex] = {
                                     min: parseInt(data[scrapeIndex][timeIndex].split('-')[0]),
                                     max: parseInt(data[scrapeIndex][timeIndex].split('-')[1])
@@ -85,7 +85,7 @@ module.exports = function (RED, debugSettings) {
                             case 'temperatureC':
                             case 'temperatureFeltC':
                             case 'relativeHumidity':
-                            case 'precipationProbabilityPercentage':
+                            case 'precipitationProbabilityPercentage':
                                 parsedData['weatherData'][timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
                                 break;
                             default:
@@ -93,19 +93,19 @@ module.exports = function (RED, debugSettings) {
                         }
                     }
 
-                    else if(data[scrapeIndex].constructor === Array && scrapeIndex === 'precipationHourly') {
+                    else if(data[scrapeIndex].constructor === Array && scrapeIndex === 'precipitationHourly') {
                         // Split the available hourly data into 2*3hours
-                        let precipationHourlyTimeGroup = data[scrapeIndex].splice(0,6);
-                        let precipationHourlyTimeObject = {};
+                        let precipitationHourlyTimeGroup = data[scrapeIndex].splice(0,6);
+                        let precipitationHourlyTimeObject = {};
                         // For each hour create two properties and pop the value from the split array
                         for(let i = 0; i<3; i++) {
                             let hourlyDate = new Date(timeDate.getTime() + i * 60 * 60000);
-                            precipationHourlyTimeObject[hourlyDate.toISOString().slice(0,10) + 'T' + hourlyDate.toISOString().slice(11,16)] = {
-                                precipationProbabilityPercentage: parseInt(precipationHourlyTimeGroup.shift()),
-                                precipationMmPer3h: parseInt(precipationHourlyTimeGroup.shift())
+                            precipitationHourlyTimeObject[hourlyDate.toISOString().slice(0,10) + 'T' + hourlyDate.toISOString().slice(11,16)] = {
+                                precipitationProbabilityPercentage: parseInt(precipitationHourlyTimeGroup.shift()),
+                                precipitationMmPer3h: parseInt(precipitationHourlyTimeGroup.shift())
                             }
                         }
-                        parsedData['weatherData'][timeEl][scrapeIndex] = precipationHourlyTimeObject;
+                        parsedData['weatherData'][timeEl][scrapeIndex] = precipitationHourlyTimeObject;
                     }
                 }
             }
@@ -149,7 +149,7 @@ module.exports = function (RED, debugSettings) {
                     case 'weatherDescription':
                         parsedData[scrapeIndex] = data[scrapeIndex].join("\r\n");
                         break;
-                    case 'precipationHourly':
+                    case 'precipitationHourly':
                         break;
                     default:
                         parsedData[scrapeIndex] = data[scrapeIndex];
