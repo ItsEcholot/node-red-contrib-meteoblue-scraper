@@ -18,12 +18,12 @@ Remember to configure the meteoblue-scraper node before you deploy your changes.
 
 Documentation
 -------------
-####Input
+#### Input  
 The meteoblue-scraper node will accept any input for starting the scraping and 
 parsing process.  
 At the moment it's not configurable through the input payload.
 
-####Output
+#### Output  
 The meteoblue-scraper node will output a payload object with the following properties:
 
 **precipationHourly**  
