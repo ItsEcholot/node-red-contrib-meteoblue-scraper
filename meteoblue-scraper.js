@@ -24,11 +24,17 @@ module.exports = function (RED, debugSettings) {
             .config('headers', {'cookie': cookies ? cookies : ''})
             .set({
                 'time': ['.times>td>.cell'],
+                'timeHourly': ['.hourlywind tr:first>td'],
                 'icon': ['.icons>td>.cell>.pictoicon>.picon@class'],
+                'iconHourly': ['.hourlywind tr:range(2,2)>td>.pictoicon>.picon@class'],
                 'temperatureC': ['.temperatures>td>.cell'],
+                'temperatureCHourly': ['.hourlywind tr:range(4,4)>td'],
                 'temperatureFeltC': ['.windchills>td>.cell'],
                 'windDirection': ['.winddirs>td>.cell>div'],
+                'windDirectionHourly': ['.hourlywind tr:range(5,5)>td>span@class'],
                 'windSpeedKmh': ['.windspeeds>td>.cell'],
+                'windSpeedKmhHourly': ['.hourlywind tr:range(6,6)>td'],
+                'windgustKmhHourly': ['.hourlywind tr:range(7,7)>td'],
                 'relativeHumidity': ['.humidities>td>.cell'],
                 'precipitationMmPer3h': ['.precips:first>td>.cell'],
                 'precipitationProbabilityPercentage': ['.precipprobs>td>.cell'],
