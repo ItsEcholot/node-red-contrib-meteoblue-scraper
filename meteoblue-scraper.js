@@ -56,13 +56,14 @@ module.exports = function (RED, debugSettings) {
 
     function parseMeteoblue(data, callback) {
         let parsedData = {};
+        parsedData['weatherData'] = {};
 
         // Create a weather information object for each 3 hours
         data.time.forEach(function (timeEl, timeIndex) {
             let timeDate = timeStringToDate(timeEl);
             // Convert to ISO string to compensate for time zones
             timeEl = timeDate.toISOString().slice(0,10) + 'T' + timeDate.toISOString().slice(11,16);
-            parsedData[timeEl] = {};
+            parsedData['weatherData'][timeEl] = {};
 
             // Add all the available properties to the weather information object that are arrays and contain enough data
             for(let scrapeIndex in data) {
@@ -72,11 +73,11 @@ module.exports = function (RED, debugSettings) {
                             case 'time':
                                 break;
                             case 'icon':
-                                parsedData[timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
+                                parsedData['weatherData'][timeEl][scrapeIndex] = 'https://static.meteoblue.com/website/images/picto/' + data[scrapeIndex][timeIndex].replace(/picon p/, '') + '.svg';
                                 break;
                             case 'windSpeedKmh':
                             case 'precipationMmPer3h':
-                                parsedData[timeEl][scrapeIndex] = {
+                                parsedData['weatherData'][timeEl][scrapeIndex] = {
                                     min: parseInt(data[scrapeIndex][timeIndex].split('-')[0]),
                                     max: parseInt(data[scrapeIndex][timeIndex].split('-')[1])
                                 };
@@ -85,10 +86,10 @@ module.exports = function (RED, debugSettings) {
                             case 'temperatureFeltC':
                             case 'relativeHumidity':
                             case 'precipationProbabilityPercentage':
-                                parsedData[timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
+                                parsedData['weatherData'][timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
                                 break;
                             default:
-                                parsedData[timeEl][scrapeIndex] = data[scrapeIndex][timeIndex];
+                                parsedData['weatherData'][timeEl][scrapeIndex] = data[scrapeIndex][timeIndex];
                         }
                     }
 
@@ -104,7 +105,7 @@ module.exports = function (RED, debugSettings) {
                                 precipationMmPer3h: parseInt(precipationHourlyTimeGroup.shift())
                             }
                         }
-                        parsedData[timeEl][scrapeIndex] = precipationHourlyTimeObject;
+                        parsedData['weatherData'][timeEl][scrapeIndex] = precipationHourlyTimeObject;
                     }
                 }
             }
@@ -123,13 +124,18 @@ module.exports = function (RED, debugSettings) {
                         break;
                     case 'timezone':
                         // We're compensating for timezones. So let's set this to UTC.
-                        //parsedData[scrapeIndex] = data[scrapeIndex].split(': ')[1];
                         parsedData[scrapeIndex] = 'UTC';
                         break;
                     case 'timesSunriseSunset':
+                        let sunrise = new Date();
+                        sunrise.setHours(parseInt((data[scrapeIndex].split(/\n/)[0]).split(':')[0]));
+                        sunrise.setMinutes(parseInt((data[scrapeIndex].split(/\n/)[0]).split(':')[1]));
+                        let sunset = new Date();
+                        sunset.setHours(parseInt((data[scrapeIndex].split(/\n/)[1]).split(':')[0]));
+                        sunset.setMinutes(parseInt((data[scrapeIndex].split(/\n/)[1]).split(':')[1]));
                         parsedData[scrapeIndex] = {
-                            sunrise: parseInt(data[scrapeIndex].split(/\n/)[0]),
-                            sunset: parseInt(data[scrapeIndex].split(/\n/)[1])
+                            sunrise: sunrise.toISOString().slice(0,10) + 'T' + sunrise.toISOString().slice(11,16),
+                            sunset: sunset.toISOString().slice(0,10) + 'T' + sunset.toISOString().slice(11,16)
                         };
                         break;
                     case 'lastModelRun':
