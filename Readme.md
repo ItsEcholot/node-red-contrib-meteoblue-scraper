@@ -39,9 +39,7 @@ weather data
         - windSpeedKmh:number - Wind speed in kilometers per hour
         - windGustKmh:number - Wind gust speed in kilometers per hour
         - relativeHumidity:number - Relative humidity in percentage
-        - precipitationMmPer3h:object - Amount of precipitation in millimeters per 3 hours
-            - min:number - Minimum amount of precipitation in millimeters per 3 hours
-            - max:number - Maximum amount of precipitation in millimeters per 3 hours
+        - precipitationAmountMm:number - Amount of precipitation in this hour
         - precipitationProbabilityPercentage:number - Probability of precipitation in
         percentage
 - uvIndex:number - UV Index
@@ -61,313 +59,283 @@ Sample output
 ```
 {
   "weatherData": {
-    "2017-07-13T01:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_night.svg",
+    "2017-07-13T22:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_night.svg",
+      "temperatureC": 17,
+      "windDirection": "NNE",
+      "windSpeedKmh": 2,
+      "windGustKmh": 7,
+      "precipitationProbabilityPercentage": 10,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 18,
+      "relativeHumidity": 86
+    },
+    "2017-07-13T23:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_night.svg",
+      "temperatureC": 17,
+      "windDirection": "N",
+      "windSpeedKmh": 3,
+      "windGustKmh": 8,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 17,
+      "relativeHumidity": 82.5
+    },
+    "2017-07-14T00:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/08_night.svg",
       "temperatureC": 17,
       "windDirection": "NNW",
       "windSpeedKmh": 2,
-      "windGustKmh": 6,
-      "temperatureFeltC": 19,
-      "relativeHumidity": 97,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T02:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_night.svg",
-      "temperatureC": 17,
-      "windDirection": "N",
-      "windSpeedKmh": 2,
-      "windGustKmh": 9,
-      "temperatureFeltC": 19,
-      "relativeHumidity": 97,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T03:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_night.svg",
-      "temperatureC": 17,
-      "windDirection": "NNE",
-      "windSpeedKmh": 1,
-      "windGustKmh": 13,
-      "temperatureFeltC": 19,
-      "relativeHumidity": 97,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T04:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
-      "temperatureC": 17,
-      "windDirection": "NNE",
-      "windSpeedKmh": 3,
-      "windGustKmh": 13,
-      "temperatureFeltC": 18,
-      "relativeHumidity": 94,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 30
-    },
-    "2017-07-13T05:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
-      "temperatureC": 17,
-      "windDirection": "NE",
-      "windSpeedKmh": 5,
-      "windGustKmh": 18,
-      "temperatureFeltC": 18,
-      "relativeHumidity": 94,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 30
-    },
-    "2017-07-13T06:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
-      "temperatureC": 18,
-      "windDirection": "ENE",
-      "windSpeedKmh": 7,
-      "windGustKmh": 20,
-      "temperatureFeltC": 18,
-      "relativeHumidity": 94,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 30
-    },
-    "2017-07-13T07:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_day.svg",
-      "temperatureC": 19,
-      "windDirection": "ENE",
-      "windSpeedKmh": 8,
-      "windGustKmh": 18,
-      "temperatureFeltC": 22,
-      "relativeHumidity": 80,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T08:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_day.svg",
-      "temperatureC": 20,
-      "windDirection": "ENE",
-      "windSpeedKmh": 9,
-      "windGustKmh": 18,
-      "temperatureFeltC": 22,
-      "relativeHumidity": 80,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T09:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
-      "temperatureC": 21,
-      "windDirection": "ENE",
-      "windSpeedKmh": 9,
-      "windGustKmh": 20,
-      "temperatureFeltC": 22,
-      "relativeHumidity": 80,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 10
-    },
-    "2017-07-13T10:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
-      "temperatureC": 22,
-      "windDirection": "ENE",
-      "windSpeedKmh": 9,
-      "windGustKmh": 16,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 68,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T11:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
-      "temperatureC": 23,
-      "windDirection": "ENE",
-      "windSpeedKmh": 9,
-      "windGustKmh": 17,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 68,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T12:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
-      "temperatureC": 23,
-      "windDirection": "ENE",
-      "windSpeedKmh": 8,
-      "windGustKmh": 14,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 68,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T13:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
-      "temperatureC": 23,
-      "windDirection": "ENE",
-      "windSpeedKmh": 7,
-      "windGustKmh": 11,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 63,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T14:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
-      "temperatureC": 24,
-      "windDirection": "ENE",
-      "windSpeedKmh": 6,
-      "windGustKmh": 9,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 63,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T15:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
-      "temperatureC": 24,
-      "windDirection": "ENE",
-      "windSpeedKmh": 5,
-      "windGustKmh": 9,
-      "temperatureFeltC": 25,
-      "relativeHumidity": 63,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T16:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
-      "temperatureC": 24,
-      "windDirection": "ENE",
-      "windSpeedKmh": 5,
-      "windGustKmh": 10,
-      "temperatureFeltC": 23,
-      "relativeHumidity": 67,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T17:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
-      "temperatureC": 23,
-      "windDirection": "ENE",
-      "windSpeedKmh": 4,
-      "windGustKmh": 10,
-      "temperatureFeltC": 23,
-      "relativeHumidity": 67,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T18:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/13_day.svg",
-      "temperatureC": 22,
-      "windDirection": "NE",
-      "windSpeedKmh": 3,
-      "windGustKmh": 9,
-      "temperatureFeltC": 23,
-      "relativeHumidity": 67,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T19:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/01_day.svg",
-      "temperatureC": 20,
-      "windDirection": "NNE",
-      "windSpeedKmh": 2,
-      "windGustKmh": 6,
-      "temperatureFeltC": 17,
-      "relativeHumidity": 73,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T20:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_night.svg",
-      "temperatureC": 18,
-      "windDirection": "NNE",
-      "windSpeedKmh": 1,
-      "windGustKmh": 6,
-      "temperatureFeltC": 17,
-      "relativeHumidity": 73,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
-    },
-    "2017-07-13T21:00": {
-      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_night.svg",
-      "temperatureC": 17,
-      "windDirection": "ENE",
-      "windSpeedKmh": 1,
       "windGustKmh": 4,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 16,
+      "relativeHumidity": 79
+    },
+    "2017-07-14T01:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_night.svg",
+      "temperatureC": 17,
+      "windDirection": "NW",
+      "windSpeedKmh": 2,
+      "windGustKmh": 4,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 10,
+      "temperatureFeltC": 16,
+      "relativeHumidity": 79
+    },
+    "2017-07-14T02:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_night.svg",
+      "temperatureC": 16,
+      "windDirection": "WNW",
+      "windSpeedKmh": 1,
+      "windGustKmh": 5,
+      "precipitationProbabilityPercentage": 10,
+      "precipitationAmountMm": 0,
       "temperatureFeltC": 17,
-      "relativeHumidity": 73,
-      "precipitationMmPer3h": {
-        "min": 0,
-        "max": 0
-      },
-      "precipitationProbabilityPercentage": 0
+      "relativeHumidity": 80.5
+    },
+    "2017-07-14T03:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/33_night.svg",
+      "temperatureC": 16,
+      "windDirection": "WSW",
+      "windSpeedKmh": 2,
+      "windGustKmh": 11,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 10,
+      "temperatureFeltC": 18,
+      "relativeHumidity": 82
+    },
+    "2017-07-14T04:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
+      "temperatureC": 16,
+      "windDirection": "WSW",
+      "windSpeedKmh": 2,
+      "windGustKmh": 12,
+      "precipitationProbabilityPercentage": 10,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 18,
+      "relativeHumidity": 82
+    },
+    "2017-07-14T05:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/33_day.svg",
+      "temperatureC": 17,
+      "windDirection": "W",
+      "windSpeedKmh": 2,
+      "windGustKmh": 16,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 20,
+      "temperatureFeltC": 19.5,
+      "relativeHumidity": 82
+    },
+    "2017-07-14T06:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/22_day.svg",
+      "temperatureC": 18,
+      "windDirection": "W",
+      "windSpeedKmh": 4,
+      "windGustKmh": 17,
+      "precipitationProbabilityPercentage": 20,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 21,
+      "relativeHumidity": 82
+    },
+    "2017-07-14T07:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
+      "temperatureC": 19,
+      "windDirection": "W",
+      "windSpeedKmh": 8,
+      "windGustKmh": 23,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 30,
+      "temperatureFeltC": 21,
+      "relativeHumidity": 82
+    },
+    "2017-07-14T08:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
+      "temperatureC": 20,
+      "windDirection": "W",
+      "windSpeedKmh": 8,
+      "windGustKmh": 24,
+      "precipitationProbabilityPercentage": 30,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 22,
+      "relativeHumidity": 76
+    },
+    "2017-07-14T09:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/19_day.svg",
+      "temperatureC": 20,
+      "windDirection": "W",
+      "windSpeedKmh": 8,
+      "windGustKmh": 25,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 40,
+      "temperatureFeltC": 23,
+      "relativeHumidity": 70
+    },
+    "2017-07-14T10:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
+      "temperatureC": 21,
+      "windDirection": "W",
+      "windSpeedKmh": 9,
+      "windGustKmh": 27,
+      "precipitationProbabilityPercentage": 40,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 23,
+      "relativeHumidity": 70
+    },
+    "2017-07-14T11:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/33_day.svg",
+      "temperatureC": 22,
+      "windDirection": "W",
+      "windSpeedKmh": 10,
+      "windGustKmh": 29,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 40,
+      "temperatureFeltC": 22.5,
+      "relativeHumidity": 67.5
+    },
+    "2017-07-14T12:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
+      "temperatureC": 22,
+      "windDirection": "W",
+      "windSpeedKmh": 11,
+      "windGustKmh": 29,
+      "precipitationProbabilityPercentage": 40,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 22,
+      "relativeHumidity": 65
+    },
+    "2017-07-14T13:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
+      "temperatureC": 22,
+      "windDirection": "WNW",
+      "windSpeedKmh": 11,
+      "windGustKmh": 31,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 40,
+      "temperatureFeltC": 22,
+      "relativeHumidity": 65
+    },
+    "2017-07-14T14:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/33_day.svg",
+      "temperatureC": 23,
+      "windDirection": "WNW",
+      "windSpeedKmh": 13,
+      "windGustKmh": 32,
+      "precipitationProbabilityPercentage": 40,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 21.5,
+      "relativeHumidity": 65
+    },
+    "2017-07-14T15:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
+      "temperatureC": 23,
+      "windDirection": "WNW",
+      "windSpeedKmh": 11,
+      "windGustKmh": 28,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 40,
+      "temperatureFeltC": 21,
+      "relativeHumidity": 65
+    },
+    "2017-07-14T16:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
+      "temperatureC": 23,
+      "windDirection": "WNW",
+      "windSpeedKmh": 10,
+      "windGustKmh": 29,
+      "precipitationProbabilityPercentage": 40,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 21,
+      "relativeHumidity": 65
+    },
+    "2017-07-14T17:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/04_day.svg",
+      "temperatureC": 22,
+      "windDirection": "WNW",
+      "windSpeedKmh": 9,
+      "windGustKmh": 26,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 60,
+      "temperatureFeltC": 18.5,
+      "relativeHumidity": 71
+    },
+    "2017-07-14T18:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_day.svg",
+      "temperatureC": 21,
+      "windDirection": "WNW",
+      "windSpeedKmh": 7,
+      "windGustKmh": 21,
+      "precipitationProbabilityPercentage": 60,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 16,
+      "relativeHumidity": 77
+    },
+    "2017-07-14T19:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/01_day.svg",
+      "temperatureC": 19,
+      "windDirection": "NW",
+      "windSpeedKmh": 4,
+      "windGustKmh": 14,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 60,
+      "temperatureFeltC": 16,
+      "relativeHumidity": 77
+    },
+    "2017-07-14T20:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_night.svg",
+      "temperatureC": 17,
+      "windDirection": "WNW",
+      "windSpeedKmh": 3,
+      "windGustKmh": 15,
+      "precipitationProbabilityPercentage": 60,
+      "precipitationAmountMm": 0,
+      "temperatureFeltC": 17,
+      "relativeHumidity": 81.5
+    },
+    "2017-07-14T21:00": {
+      "icon": "https:\/\/static.meteoblue.com\/website\/images\/picto\/07_night.svg",
+      "temperatureC": 16,
+      "windDirection": "WSW",
+      "windSpeedKmh": 3,
+      "windGustKmh": 14,
+      "precipitationProbabilityPercentage": 0,
+      "precipitationAmountMm": 60,
+      "temperatureFeltC": 18,
+      "relativeHumidity": 86
     }
   },
   "uvIndex": 8,
   "timesSunriseSunset": {
-    "sunrise": "2017-07-13T03:48",
-    "sunset": "2017-07-13T19:18"
+    "sunrise": "2017-07-14T03:49",
+    "sunset": "2017-07-14T19:18"
   },
-  "moonInfo": "Abnehmender Mond (229\u00b0)",
-  "pressureHpa": 1019,
+  "moonInfo": "Abnehmender Mond (241\u00b0)",
+  "pressureHpa": 1018,
   "timezone": "UTC",
   "domain": "NEMS4",
-  "lastModelRun": 1499930700,
-  "weatherDescription": "In der Nacht bis zum sp\u00e4ten Morgen bleibt es bedeckt. Die Wolken lockern am Nachmittag auf. Die Sonne ist nur vereinzelt sichtbar. Die Sonneneinstrahlung ist erh\u00f6ht mit einem UV-Index von 8. Auf Sonnenschutz sollte geachtet werden.\r\nAm Donnerstag weht ein leichter Wind. Die Windgeschwindigkeit erreicht bis zu 9km\/h. Der Wind kommt nachts aus Norden, morgens aus Nord-Ost und nachmittags aus Osten.\r\nDie Wettervorhersage in Aarau f\u00fcr Donnerstag ist stabil und sollte zutreffen.",
-  "meteogram": "\/\/my.meteoblue.com\/visimage\/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&apikey=5838a18e295d&cache=no&city=Aarau&iso2=ch&lat=47.392502&lon=8.044220&asl=389&tz=Europe%2FZurich&lang=de&ts=1499951962&sig=d9c9b9de033b1e233fcb81b36dd13c80 1.4x"
+  "lastModelRun": 1499974140,
+  "weatherDescription": "In der Nacht und am Nachmittag ist das Wetter wechselhaft klar mit gelegentlichen Schauern. Am Morgen wird es dicht bew\u00f6lkt und regnerisch. Die Sonne ist nur vereinzelt sichtbar. Der UV-Index betr\u00e4gt 8. Es sollte auf Sonnenschutz geachtet werden.\r\nIn der Nacht und am Morgen weht ein leichter Wind. Freitagnachmittag weht eine m\u00e4\u00dfige Brise. Die Windgeschwindigkeit erreicht bis zu 13km\/h. Der Wind kommt nachts aus Nord-Ost, morgens aus Westen und nachmittags aus Nord-West.\r\nDie Wettervorhersage in Aarau f\u00fcr Freitag ist stabil und sollte zutreffen.",
+  "meteogram": "\/\/my.meteoblue.com\/visimage\/meteogram_web_hd?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&apikey=5838a18e295d&cache=no&city=Aarau&iso2=ch&lat=47.392502&lon=8.044220&asl=389&tz=Europe%2FZurich&lang=de&ts=1500016140&sig=8b0083fdefeac6787a33222562491c71"
 }
 ```
 
