@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-meteoblue-scraper",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Node red node that parses weather data from meteoblue.com and returns a single js object as the payload",
   "main": "index.js",
   "author": {
