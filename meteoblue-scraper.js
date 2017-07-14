@@ -36,8 +36,8 @@ module.exports = function (RED, debugSettings) {
                 'windSpeedKmh': ['.hourlywind tr:range(6,6)>td'],
                 'windGustKmh': ['.hourlywind tr:range(7,7)>td'],
                 'relativeHumidity': ['.humidities>td>.cell'],
-                'precipitationMmPer3h': ['.precips:first>td>.cell'],
-                'precipitationProbabilityPercentage': ['.precipprobs>td>.cell'],
+                //'precipitationMmPer3h': ['.precips:first>td>.cell'],
+                //'precipitationProbabilityPercentage': ['.precipprobs>td>.cell'],
                 'precipitationHourly': ['.precip-hourly-title>.precip-bar-part>.precip-hourly>.precip-help>strong'],
                 'uvIndex': '.model-info>.sun>.uv-index>.uv-value',
                 'timesSunriseSunset': '.model-info>.sun>.times-rs',
@@ -74,7 +74,7 @@ module.exports = function (RED, debugSettings) {
                 if(!data.hasOwnProperty(scrapeIndex))
                     continue;
 
-                if(data[scrapeIndex].constructor === Array && data[scrapeIndex].length === data.timeHourly.length) {
+                if(data[scrapeIndex].constructor === Array && (data[scrapeIndex].length === data.timeHourly.length || (data[scrapeIndex].length === data.timeHourly.length * 2 && scrapeIndex === 'precipitationHourly'))) {
                     switch(scrapeIndex) {
                         case 'timeHourly':
                             break;
@@ -88,6 +88,10 @@ module.exports = function (RED, debugSettings) {
                         case 'windSpeedKmh':
                         case 'windGustKmh':
                             parsedData['weatherData'][timeEl][scrapeIndex] = parseInt(data[scrapeIndex][timeIndex]);
+                            break;
+                        case 'precipitationHourly':
+                            parsedData['weatherData'][timeEl]['precipitationProbabilityPercentage'] = parseInt(data[scrapeIndex][timeIndex]);
+                            parsedData['weatherData'][timeEl]['precipitationAmountMm'] = parseInt(data[scrapeIndex][timeIndex+1]);
                             break;
                         default:
                             parsedData['weatherData'][timeEl][scrapeIndex] = data[scrapeIndex][timeIndex];
@@ -110,14 +114,7 @@ module.exports = function (RED, debugSettings) {
                             switch(scrapeIndex) {
                                 case 'temperatureFeltC':
                                 case 'relativeHumidity':
-                                case 'precipitationProbabilityPercentage':
-                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = parseInt(data[scrapeIndex][i]);
-                                    break;
-                                case 'precipitationMmPer3h':
-                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = {
-                                        min: parseInt(data[scrapeIndex][i].split('-')[0]) ? parseInt(data[scrapeIndex][i].split('-')[0]) : 0,
-                                        max: parseInt(data[scrapeIndex][i].split('-')[1]) ? parseInt(data[scrapeIndex][i].split('-')[1]) : 0
-                                    };
+                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = parseInt(data[scrapeIndex][i]) - (x * 0.5 * (parseInt(data[scrapeIndex][i]) - (parseInt(data[scrapeIndex][i+1]) ? parseInt(data[scrapeIndex][i+1]) : parseInt(data[scrapeIndex][0]))));
                                     break;
                                 default:
                                     parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = data[scrapeIndex][i];
