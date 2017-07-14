@@ -114,7 +114,7 @@ module.exports = function (RED, debugSettings) {
                             switch(scrapeIndex) {
                                 case 'temperatureFeltC':
                                 case 'relativeHumidity':
-                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = parseInt(data[scrapeIndex][i]) - (x * 0.5 * (parseInt(data[scrapeIndex][i]) - (parseInt(data[scrapeIndex][i+1]) ? parseInt(data[scrapeIndex][i+1]) : parseInt(data[scrapeIndex][0]))));
+                                    parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = parseInt(data[scrapeIndex][i]) - (x * 0.33 * (parseInt(data[scrapeIndex][i]) - (parseInt(data[scrapeIndex][i+1]) ? parseInt(data[scrapeIndex][i+1]) : parseInt(data[scrapeIndex][0]))));
                                     break;
                                 default:
                                     parsedData['weatherData'][Object.keys(parsedData['weatherData'])[indexCounter+x]][scrapeIndex] = data[scrapeIndex][i];
