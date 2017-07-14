@@ -26,21 +26,25 @@ parsing process.
 At the moment it's not configurable through the input payload.
 
 ### Output  
-The meteoblue-scraper node will output a payload object with the following properties:
+The meteoblue-scraper node will output a payload object with the following properties.
+After the property name, the property type and a time interval value in which the meteoblue website
+provides this data, is displayed.  
+For each time interval value that is larger than 1h, the values for each hour are interpolated
+between the official values from meteoblue which are available in 3 hours intervals.
 
 - weatherData:object - Contains multiple {{date string}} objects that contain the
 weather data
     - {{date string}}:object - Contains the actual weather data
-        - icon:string - Direct link to a SVG file that is used as an icon on the
-        meteoblue website.
-        - temperatureC:number - Temperature in degree Celsius
-        - temperatureFeltC:number - Temperature "felt" in degree Celsius
-        - windDirection:string - Wind direction abbreviation
-        - windSpeedKmh:number - Wind speed in kilometers per hour
-        - windGustKmh:number - Wind gust speed in kilometers per hour
-        - relativeHumidity:number - Relative humidity in percentage
-        - precipitationAmountMm:number - Amount of precipitation in this hour
-        - precipitationProbabilityPercentage:number - Probability of precipitation in
+        - icon:string:1h - Direct link to a SVG file that is used as an icon on the
+        meteoblue website
+        - temperatureC:number:1h - Temperature in degree Celsius
+        - temperatureFeltC:number:3h - Temperature "felt" in degree Celsius
+        - windDirection:string:1h - Wind direction abbreviation
+        - windSpeedKmh:number:1h - Wind speed in kilometers per hour
+        - windGustKmh:number:1h - Wind gust speed in kilometers per hour
+        - relativeHumidity:number:3h - Relative humidity in percentage
+        - precipitationAmountMm:number:1h - Amount of precipitation in this hour
+        - precipitationProbabilityPercentage:number:1h - Probability of precipitation in
         percentage
 - uvIndex:number - UV Index
 - timesSunriseSunset:object - Contains sunrise and sunset dates
